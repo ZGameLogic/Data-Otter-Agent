@@ -27,17 +27,18 @@ public class DataOtterAgent {
             return registered.id();
         });
 
-
+        System.out.println(systemService.getDiskUsedPercentage());
     }
 
     @Scheduled(cron = "0 * * * * *")
     private void scheduledMinuteTask() {
-        System.out.println(AGENT_VERSION);
+        systemService.getCpuUsage();
         sendAgentStatus();
     }
 
     private void sendAgentStatus() {
-        AgentReport report = new AgentReport(200, 56, 23, "0.0.1");
+        long memoryUsage = systemService.getMemoryUsage();
+        AgentReport report = new AgentReport(memoryUsage, 56, 23, "0.0.1");
         dataOtterService.report(report, AGENT_ID);
     }
 }
