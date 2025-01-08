@@ -34,9 +34,14 @@ public class SystemService {
 
     public long getCpuUsage(){
         CentralProcessor processor = systemInfo.getHardware().getProcessor();
-        double cpuUsage = processor.getSystemCpuLoadBetweenTicks(processor.getSystemCpuLoadTicks()) * 100;
-        System.out.printf("CPU Usage: %.2f%%\n", cpuUsage);
-        return 2;
+        long[] prevTicks = processor.getSystemCpuLoadTicks();
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        double cpuUsage = processor.getSystemCpuLoadBetweenTicks(prevTicks);
+        return (long) (cpuUsage * 100);
     }
 
     public long getDiskUsedPercentage(){

@@ -26,8 +26,6 @@ public class DataOtterAgent {
             log.info("Agent registered with id: {}", registered.id());
             return registered.id();
         });
-
-        System.out.println(systemService.getDiskUsedPercentage());
     }
 
     @Scheduled(cron = "0 * * * * *")
@@ -38,7 +36,9 @@ public class DataOtterAgent {
 
     private void sendAgentStatus() {
         long memoryUsage = systemService.getMemoryUsage();
-        AgentReport report = new AgentReport(memoryUsage, 56, 23, "0.0.1");
+        long diskUsage = systemService.getDiskUsedPercentage();
+        long cpuUsage = systemService.getCpuUsage();
+        AgentReport report = new AgentReport(memoryUsage, cpuUsage, diskUsage, AGENT_VERSION);
         dataOtterService.report(report, AGENT_ID);
     }
 }
