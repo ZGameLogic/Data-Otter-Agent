@@ -2,11 +2,13 @@ package com.zgamelogic.dataotter.agent.services;
 
 import com.zgamelogic.dataotter.agent.data.Agent;
 import com.zgamelogic.dataotter.agent.data.AgentReport;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
+@Slf4j
 public class DataOtterService {
     @Value("${data-otter.url}")
     private String baseUrl;
@@ -24,6 +26,10 @@ public class DataOtterService {
 
     public void report(AgentReport report, long id){
         String url = baseUrl + "/agent/" + id + "/status";
-        restTemplate.postForObject(url, report, String.class);
+        try {
+            restTemplate.postForObject(url, report, String.class);
+        } catch(Exception e) {
+            log.info("Error reporting agent to backend.");
+        }
     }
 }
