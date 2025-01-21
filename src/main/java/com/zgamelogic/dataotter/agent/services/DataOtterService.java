@@ -26,10 +26,14 @@ public class DataOtterService {
 
     public void report(AgentReport report, long id){
         String url = baseUrl + "/agent/" + id + "/status";
-        try {
-            restTemplate.postForObject(url, report, String.class);
-        } catch(Exception e) {
-            log.info("Error reporting agent to backend.");
+        int tries = 0;
+        while(tries < 5) {
+            tries++;
+            try {
+                restTemplate.postForObject(url, report, String.class);
+            } catch (Exception e) {
+                log.info("Error reporting agent to backend.");
+            }
         }
     }
 }
