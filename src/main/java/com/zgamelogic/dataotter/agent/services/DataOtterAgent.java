@@ -17,7 +17,7 @@ public class DataOtterAgent {
     public DataOtterAgent(DataOtterService dataOtterService, PersistenceService persistenceService, SystemService systemService) {
         this.dataOtterService = dataOtterService;
         this.systemService = systemService;
-        AGENT_VERSION = "0.0.2";
+        AGENT_VERSION = "0.0.5";
         AGENT_ID = persistenceService.getAgentId().orElseGet(() -> {
             log.info("No agent data file found, registering new agent...");
             Agent agent = new Agent(null, systemService.getSystemName(), systemService.getOperatingSystemName());
@@ -30,7 +30,6 @@ public class DataOtterAgent {
 
     @Scheduled(cron = "0 * * * * *")
     private void scheduledMinuteTask() {
-        systemService.getCpuUsage();
         sendAgentStatus();
     }
 

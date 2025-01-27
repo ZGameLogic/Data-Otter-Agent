@@ -31,9 +31,9 @@ public class DataOtterService {
             tries++;
             try {
                 restTemplate.postForObject(url, report, String.class);
-            } catch (Exception e) {
-                log.info("Error reporting agent to backend.");
-            }
+                return;
+            } catch (Exception ignored) {}
         }
+        log.info("Error reporting agent to backend.");
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>com.zgamelogic.dataotter.agent</groupId>
     <artifactId>Data-Otter-Agent</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.5</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
