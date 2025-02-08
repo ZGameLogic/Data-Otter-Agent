@@ -13,14 +13,9 @@ public class DataOtterService {
     @Value("${data-otter.url}")
     private String baseUrl;
 
-    private final RestTemplate restTemplate;
-
-    public DataOtterService() {
-        restTemplate = new RestTemplate();
-    }
-
     public Agent registerAgent(Agent agent) {
         String url = baseUrl + "/agent/register";
+        RestTemplate restTemplate = new RestTemplate();
         return restTemplate.postForObject(url, agent, Agent.class);
     }
 
@@ -30,6 +25,7 @@ public class DataOtterService {
         while(tries < 5) {
             tries++;
             try {
+                RestTemplate restTemplate = new RestTemplate();
                 restTemplate.postForObject(url, report, String.class);
                 return;
             } catch (Exception ignored) {}
